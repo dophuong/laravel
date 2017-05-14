@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\User;
+
 
 class PagesController extends Controller
 {
     public function home(){
-        return view('home');
+        $user = User::all();
+        return view('home', compact('user'));
     }
     public function about(){
         return view('about');

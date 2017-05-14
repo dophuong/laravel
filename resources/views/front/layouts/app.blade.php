@@ -10,10 +10,9 @@
 </head>
 <body>
 
-@include('shared.navbar')
+@include('front.layouts.navbar')
 
 @yield('content')
 
 </body>
 </html>
-
