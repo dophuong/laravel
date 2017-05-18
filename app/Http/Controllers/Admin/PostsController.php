@@ -1,13 +1,28 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\UserRequest;
+use App\Models\Post;
+use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\UploadedFile;
+use App\Http\Controllers\Controller;
 
 class PostsController extends Controller
 {
+    public function show(){
+        $post = Post::with('user')->orderBy('created_at','desc')->simplePaginate(2);
+        return view('admin.post.post', compact('post'));
+    }
+    public function addPost(){
+        return view('admin.post.addPost');
+    }
+
     /**
-     * Get a validator for an incoming registration request.
+     * Get a validator for an incoming add post request.
      *
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
@@ -22,18 +37,34 @@ class PostsController extends Controller
         ]);
     }
 
+    
     /**
-     * Create a new user instance after a valid registration.
+     * Create a new user instance after a valid add.
      *
-     * @param  array  $data
-     * @return User
+     * @param  $userId
+     * @return Post
      */
-    protected function create(array $data)
+    protected function create(Request $request)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        if($request->file('image')){
+            $this->validate($request, [
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+            $imageName = $request->file('image')->getClientOriginalName();
+            $request->image->move(public_path('/images'), $imageName);
+            $post = new Post;
+            $post->image = $imageName;
+            $post->userId = Auth::user()->id;
+            $post->title = $request->input('title');
+            $post->content = $request->input('content');
+            $post->isPrivate = $request->get('isPrivate');
+            $post->save();
+            return back()
+                ->with('success','Image Uploaded successfully.')
+                ->with('path',$imageName);
+        }else{
+
+            return 'Upload image fail!';
+        }
     }
 }

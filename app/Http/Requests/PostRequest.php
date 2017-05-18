@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Http\Requests;
-use Illuminate\Http\Request;
+
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-class UserRequest extends FormRequest
+class PostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,12 +15,14 @@ class UserRequest extends FormRequest
      */
     public function authorize()
     {
-        if($this->id == Auth::user()->id){
+        if($this->userId == Auth::user()->id){
             return true;
         }
         else{
-            return false;}
+            return false;
+        }
     }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -28,10 +30,11 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-                return [
-                    'role' => 'required',
-                    'name'  => 'required|unique:users,name,' .$this->id,
-                    'email'      => 'required|email|unique:users,email,' .$this->id,
-                    'password'   => 'required|min:6'];
+        return [
+            'title' => 'required|string|max:255|unique:posts,title,' .$this->id,
+            'content' => 'required|string',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'isPrivate'=>'required'
+        ];
     }
 }

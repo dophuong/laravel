@@ -6,6 +6,7 @@
         <div class="content">
             <div class="row">
                 <div class="col-md-3">
+                    <h4><a href="{{ route('admin') }}">Home</a></h4>
                     <h4><a href="{{ route('getAddUser') }}">Add user</a></h4>
                 </div>
                 <div class="col-md-1"></div>

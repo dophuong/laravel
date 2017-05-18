@@ -12,45 +12,82 @@
 |
 */
 
-Route::get('/admin', '\App\Http\Controllers\Admin\HomeController@index')->name('admin');
+Route::get('/', 'FrontEnd\PagesController@index')->name('user');
 
-//Auth::routes();
+Route::get('/user/list/post/{id}','FrontEnd\PagesController@listPost')->name('userListPost');
 
-Route::get('/admin/contact', '\App\Http\Controllers\Admin\HomeController@contact')->name('contact');
-Route::get('/admin/about', '\App\Http\Controllers\Admin\HomeController@about')->name('about');
+Route::get('/user/view/post/{id}','FrontEnd\PagesController@viewPost')->name('userViewPost');
 
-//Route::group(['middleware' => 'guest'], function() {
+Route::get('/contact', 'FrontEnd\PagesController@contact')->name('contact');
 
-    Route::get('/admin/register', '\App\Http\Controllers\Admin\Auth\RegisterController@showRegistrationForm')->name('getRegister');
-    Route::post('/admin/register', '\App\Http\Controllers\Admin\Auth\RegisterController@register')->name('register');
-    Route::get('/admin/login', '\App\Http\Controllers\Admin\Auth\LoginController@showLoginForm')->name('getLogin');
-    Route::post('/admin/login', ['as' => 'admin.auth.login', 'uses' => 'Admin\Auth\LoginController@login'])->name('login');
+Route::get('/about', 'FrontEnd\PagesController@about')->name('about');
 
-    Route::get('/admin/password/reset', '\App\Http\Controllers\Admin\Auth\ForgotPasswordController@showLinkRequestForm')->name('passwordRequest');
-    Route::post('/admin/password/email', '\App\Http\Controllers\Admin\Auth\ForgotPasswordController@sendResetLinkEmail')->name('passwordEmail');
-    Route::get('/admin/password/reset/{token}', '\App\Http\Controllers\Admin\Auth\ResetPasswordController@showResetForm');
-    Route::post('/admin/password/reset', '\App\Http\Controllers\Admin\Auth\ResetPasswordController@reset');
-//});
-//Route::group(['middleware' => 'auth'], function(){
+Route::group(['middleware' => 'guest'], function() {
 
-    Route::post('logout', '\App\Http\Controllers\Admin\Auth\LoginController@logout');
-//    Route::get('/admin', '\App\Http\Controllers\Admin\HomeController@index')->name('admin');
+    Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('getRegister');
+    Route::post('/register', 'Auth\RegisterController@register')->name('register');
+    Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
+    Route::post('/login', ['as' => 'login', 'uses' => 'Auth\LoginController@login']);
 
-//});
+    Route::get('/password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('passwordRequest');
+    Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('passwordEmail');
+    Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
+    Route::post('/password/reset', 'Auth\ResetPasswordController@reset');
+});
+Route::group(['middleware' => 'auth'], function(){
 
-Route::get('/logout', '\App\Http\Controllers\Admin\Auth\LoginController@logout')->name('logout');
+    Route::get('/admin', 'Admin\HomeController@index')->name('admin');
 
-Route::get('/admin/user', '\App\Http\Controllers\Admin\UsersController@show')->name('getListUser');
+    Route::post('logout', 'Auth\LoginController@logout');
 
-Route::get('/admin/user/profile/{id}', '\App\Http\Controllers\Admin\UsersController@profile')->name('getUserProfile');
+    Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
+    
+    Route::get('/admin/user', 'Admin\UsersController@show')->name('getListUser');
+    
+    Route::get('/admin/user/profile/{id}', 'Admin\UsersController@profile')->name('getUserProfile');
+    
+    Route::get('/admin/user/profile/edit/{id}', 'Admin\UsersController@edit')->name('getEditUser');
+    
+    Route::put('/admin/user/profile/edit/{id}', ['as' => 'admin.update', 'uses' => 'Admin\UsersController@update'])->name('editUser');
+    
+    Route::get('/admin/user/profile/delete/{id}', 'Admin\UsersController@delete')->name('deleteUser');
+    
+    Route::get('/admin/user/add', 'Admin\UsersController@addView')->name('getAddUser');
+    
+    Route::post('/admin/user/add', ['as' => 'admin.create', 'uses' => 'Admin\UsersController@create'])->name('addUser');
 
-Route::get('/admin/user/profile/edit/{id}', '\App\Http\Controllers\Admin\UsersController@edit')->name('getEditUser');
+    Route::get('/admin/post', 'Admin\PostsController@show')->name('getListPost');
+    
+    Route::get('/admin/post/add', 'Admin\PostsController@addPost')->name('getAddPost');
+    
+    Route::post('/admin/post/add', ['as' => 'admin.create', 'uses' => 'Admin\PostsController@create'])->name('addPost');
 
-Route::put('/admin/user/profile/edit/{id}', ['as' => 'admin.update', 'uses' => 'Admin\UsersController@update'])->name('editUser');
+    //////////////////////////////////////////////////////////////////////
+    
+    Route::get('/user/profile', 'FrontEnd\PagesController@profile')->name('userProfile');
+    
+    Route::get('/user/post', 'FrontEnd\PagesController@post')->name('userPost');
 
-Route::get('/admin/user/profile/delete/{id}', '\App\Http\Controllers\Admin\UsersController@delete')->name('deleteUser');
+    Route::get('/user/view/post/{id}','FrontEnd\PagesController@viewPost')->name('userViewPost');
 
-Route::get('/admin/user/add', '\App\Http\Controllers\Admin\UsersController@addView')->name('getAddUser');
+    Route::get('/user/profile/edit', 'FrontEnd\PagesController@getEditProfile')->name('userGetEditProfile');
 
-Route::post('/admin/user/add', ['as' => 'admin.create', 'uses' => 'Admin\UsersController@create'])->name('addUser');
+    Route::post('/user/profile/edit/{id}',  ['as' => 'userUpdateProfile', 'uses' => 'FrontEnd\PagesController@updateProfile']);
 
+    Route::get('/user/profile/delete/{id}', 'FrontEnd\PagesController@deleteProfile')->name('userDeleteProfile');
+
+    Route::get('/user/post/add', 'FrontEnd\PagesController@getAddPost')->name('userGetAddPost');
+    
+    Route::post('/user/post/add', ['as' => 'userAddPost', 'uses' => 'FrontEnd\PagesController@addPost']);
+
+    Route::get('/user/post/edit/{id}', 'FrontEnd\PagesController@getEditPost')->name('userGetEditPost');
+    
+    Route::post('/user/post/edit/{id}', ['as' => 'userEditPost', 'uses' => 'FrontEnd\PagesController@editPost']);
+    
+    Route::get('/user/delete/post/{id}','FrontEnd\PagesController@deletePost')->name('userDeletePost');
+
+    Route::post('/comment/add/{postId}','FrontEnd\PagesController@addComment')->name('addComment');
+
+
+});
+Route::get('/comment/getComment/{postId}', 'FrontEnd\PagesController@getComment');
