@@ -8,7 +8,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Add new post</div>
                     <div class="panel-body">
-                        <form enctype="multipart/form-data" class="form-horizontal" role="form" method="POST" action="{{ action('Admin\PostsController@create') }}">
+                        <form enctype="multipart/form-data" class="form-horizontal" role="form" method="POST" action="{{ route('addPost') }}">
                             <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
                                 <label for="title" class="col-md-4 control-label">Title</label>
                                 <div class="col-md-6">

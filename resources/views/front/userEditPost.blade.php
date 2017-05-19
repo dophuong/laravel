@@ -2,7 +2,6 @@
 @section('title','Edit Post')
 
 @section('content')
-    <div class="container" xmlns="http://www.w3.org/1999/html">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
@@ -76,5 +75,4 @@
                 </div>
             </div>
         </div>
-    </div>
 @endsection

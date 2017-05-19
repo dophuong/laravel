@@ -5,14 +5,7 @@
     <div class="container">
         <div class="content">
             <div class="row">
-                <div class="col-md-2">
-                    <h4><a href="{{ route('userGetAddPost') }}">Add Post</a></h4>
-                    @foreach($user as $usr)
-                        <h4><a href="{{ route('userListPost',$usr->id) }}"><?=$usr->name?></a></h4>
-                    @endforeach
-                </div>
-                <div class="col-md-1"></div>
-                <div class="col-md-9">
+                <div class="col-md-9" style="background-color: #f9fbf8; padding: 30px">
                     @foreach($post as $p)
                         <div class="post-item">
                             <div class="col-md-3">
@@ -30,6 +23,14 @@
                         <div class="clearfix"></div>
                     @endforeach
                     {{$post->links()}}
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    <h3><a href="{{ route('userGetAddPost') }}">Add Post</a></h3>
+                    <h3>List user</h3>
+                @foreach($user as $usr)
+                        <h4><a href="{{ route('userListPost',$usr->id) }}"><?=$usr->name?></a></h4>
+                    @endforeach
                 </div>
             </div>
         </div>

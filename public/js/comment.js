@@ -9,7 +9,6 @@ $(document).ready(function () {
 
     that.replyComment = function (element, parentId, level) {
         if(level < 5){
-            alert($('#children').val())
             var $reply = element;
             $commentForm .find('#content').val('');
             if($('#user').val()){

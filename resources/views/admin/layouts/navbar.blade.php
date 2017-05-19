@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -9,7 +9,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Learning Laravel</a>
+            <a class="p-logo" href="{{route('admin')}}">English conversation </a>
         </div>
 
         <!-- Navbar Right -->
@@ -33,6 +33,8 @@
                             {{ Auth::user()->name }}<span class="caret"></span></a>
 
                             <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ route('admin') }}">Admin Management</a></li>
+                                <li><a href="{{route('userPost')}}">{{Auth::user()->name}}'s post</a></li>
                                 <li><a href="{{ route('getUserProfile', Auth::user()->id) }}">Profile</a></li>
                                 <li><a href="{{ route('logout') }}">Logout</a></li>
                             </ul>
