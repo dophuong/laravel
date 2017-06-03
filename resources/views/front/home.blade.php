@@ -2,8 +2,8 @@
 @section('title', 'Home')
 
 @section('content')
-    <div class="row">
-        <div class="col-xs-12 col-sm-10 col-md-9"  style="background-color: #f9fbf8; padding: 30px">
+    <div class="row" style="background-color: #f9fbf8">
+        <div class="col-xs-12 col-sm-10 col-md-9" style="padding: 30px">
             @foreach($post as $p)
                 <div class=" col-xs-3 col-sm-3 col-md-3">
                     <img src="\images\<?=$p->image?>" class="img-thumbnail" style="max-width: 140px"/>

@@ -11,7 +11,7 @@
     <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body style="position: relative ; min-height: 100%; clear: both; top: 0; background-color: #d1f2f4">
+<body style="position: relative ; min-height: 100%; clear: both; top: 0; background-image: url({{asset('images/bg4.jpg')}})">
 <header class="row">
     <div class="container">
         @include('front.layouts.navbar')
